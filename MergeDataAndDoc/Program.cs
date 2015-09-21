@@ -22,7 +22,7 @@ namespace MergeDataAndDoc
             using (StreamReader inputFile = new StreamReader(inputFileName))
             using(StreamWriter outputFile = new StreamWriter(outputFileName))
             {
-                string line;
+                string line; //test
                 while((line = inputFile.ReadLine()) != null)
                 {
                     string outputLine = "***" + line;
