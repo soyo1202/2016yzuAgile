@@ -11,7 +11,7 @@ namespace MergeDataAndDoc
     {
         static void Main(string[] args)
         {
-            string inputFileName = "defaultInput.txt";
+            string inputFileName = "simpleInput.txt";
             string outputFileName = "defaultOutput.txt";
             if (args.Length == 2)
             {
@@ -22,6 +22,7 @@ namespace MergeDataAndDoc
             using (StreamReader inputFile = new StreamReader(inputFileName))
             using(StreamWriter outputFile = new StreamWriter(outputFileName))
             {
+                readFile(inputFile);
                 string line; //test
                 while((line = inputFile.ReadLine()) != null)
                 {
@@ -31,7 +32,7 @@ namespace MergeDataAndDoc
                 }
             }
         }
-        public void readFile(StreamReader input) {
+        public static void readFile(StreamReader input) {
             string linebuf = input.ReadLine();
             char[] cut = {'\t', '\n'};
             string[] col = linebuf.Split(cut);
