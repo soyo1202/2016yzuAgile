@@ -31,5 +31,13 @@ namespace MergeDataAndDoc
                 }
             }
         }
+        public void readFile(StreamReader input) {
+            string linebuf = input.ReadLine();
+            char[] cut = {'\t', '\n'};
+            string[] col = linebuf.Split(cut);
+            foreach (string s in col) {
+                Console.WriteLine(s);
+            }
+        }
     }
 }
