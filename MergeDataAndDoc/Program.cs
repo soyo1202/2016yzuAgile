@@ -58,19 +58,19 @@ namespace MergeDataAndDoc
                 using (StreamWriter outputFile = new StreamWriter(outputFileName))
                 {
                     readFile(inputFile);
-                    setTempleteV2(templateFile);
-                    //setTemplete(templateFile);
-                    string line; //test
-                    while ((line = inputFile.ReadLine()) != null)
-                    {
-                        string outputLine = "***" + line;
-                        Console.WriteLine("Write line: " + outputLine);
-                        outputFile.WriteLine(outputLine);
-                    }
+                    setTemplete(templateFile, outputFile);
+                    //string line; //test
+                    //while ((line = inputFile.ReadLine()) != null)
+                    //{
+                    //    string outputLine = "***" + line;
+                    //    Console.WriteLine("Write line: " + outputLine);
+                    //    outputFile.WriteLine(outputLine);
+                    //}
+                    //outputFile.Close();
                 }
             }
         }
-        public static void setTempleteV2(StreamReader template) {
+        public static void setTemplete(StreamReader template, StreamWriter writeFile) {
             string linebuf = template.ReadToEnd();
             string result = linebuf;
             for (int i = 1; i < dataBucket.Count; i++) {
@@ -80,31 +80,9 @@ namespace MergeDataAndDoc
                    result = result.Replace("${"+dataBucket[0][j]+"}", dataBucket[i][j]);
                 }
                 Console.WriteLine(result);
+                writeFile.WriteLine(result);
             }
-        }
-        public static void setTemplete(StreamReader template) {
-            char[] cut = { ' ' };
-            string linebuf = template.ReadToEnd();
-            string[] result = linebuf.Split(cut);
-            Console.WriteLine("result check: \n");
-            for (int i = 1; i < dataBucket.Count ; i++) {
-                foreach (string s in result) {
-                    if (s.Contains("$"))
-                    {
-                        for (int j = 0; j < dataBucket[0].Length; j++)
-                        {
-                            if (s.Contains(dataBucket[0][j]))
-                            {
-                                Console.Write(" "+dataBucket[i][j]);
-                                break;
-                            }
-                        }
-                    }
-                    else
-                        Console.Write(" "+s);
-                }
-                Console.Write("\n");
-            }
+            writeFile.Close();
         }
         public static void readFile(StreamReader input) {
             string linebuf = input.ReadLine();
