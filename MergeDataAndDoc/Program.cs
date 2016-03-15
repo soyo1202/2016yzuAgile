@@ -69,12 +69,27 @@ namespace MergeDataAndDoc
             }
         }
         public static void setTemplete(StreamReader template) {
-            char[] cut = { '{', '$', '}' };
+            char[] cut = { ' ' };
             string linebuf = template.ReadToEnd();
             string[] result = linebuf.Split(cut);
             Console.WriteLine("result check: \n");
-            foreach (string s in result) {
-                Console.Write(s);
+            for (int i = 1; i < dataBucket.Count ; i++) {
+                foreach (string s in result) {
+                    if (s.Contains("$"))
+                    {
+                        for (int j = 0; j < dataBucket[0].Length; j++)
+                        {
+                            if (s.Contains(dataBucket[0][j]))
+                            {
+                                Console.Write(" "+dataBucket[i][j]);
+                                break;
+                            }
+                        }
+                    }
+                    else
+                        Console.Write(" "+s);
+                }
+                Console.Write("\n");
             }
         }
         public static void readFile(StreamReader input) {
