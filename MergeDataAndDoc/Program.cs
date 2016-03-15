@@ -11,24 +11,54 @@ namespace MergeDataAndDoc
     {
         static void Main(string[] args)
         {
-            string inputFileName = "simpleInput.txt";
+            bool fileFound = false;
+            string inputFileName = "defaultInput.txt";
+            string templateFileName = "";
             string outputFileName = "defaultOutput.txt";
-            if (args.Length == 2)
+            if (args.Length >0)
             {
-                inputFileName = args[0];
-                outputFileName = args[1];
+                for (int i = 0; i < args.Length; i++) {
+                    if (args[i] == "-r") {
+                        outputFileName = args[i + 1];
+                        i++;
+                        continue;
+                    }
+                    if (args[i] == "-i") {
+                        inputFileName = args[i+1];
+                        i++;
+                        continue;
+                    }
+                    if (args[i] == "-t") {
+                        templateFileName = args[i + 1];
+                        i++;
+                        continue;
+                    }
+                }
+                Console.Write(inputFileName);
+                Console.Write(outputFileName);
+                Console.Write(templateFileName);
             }
-
-            using (StreamReader inputFile = new StreamReader(inputFileName))
-            using(StreamWriter outputFile = new StreamWriter(outputFileName))
+            if (File.Exists(inputFileName))
+                fileFound = true;
+            else
+                Console.WriteLine("Can not found the inputfile" + inputFileName);
+            if (File.Exists(templateFileName))
+                fileFound = true;
+            else
+                Console.WriteLine("Can not found the templatefile" + templateFileName);
+            if (fileFound)
             {
-                readFile(inputFile);
-                string line; //test
-                while((line = inputFile.ReadLine()) != null)
+                using (StreamReader inputFile = new StreamReader(inputFileName))
+                using (StreamWriter outputFile = new StreamWriter(outputFileName))
                 {
-                    string outputLine = "***" + line;
-                    Console.WriteLine("Write line: " + outputLine);
-                    outputFile.WriteLine(outputLine);
+                    readFile(inputFile);
+                    string line; //test
+                    while ((line = inputFile.ReadLine()) != null)
+                    {
+                        string outputLine = "***" + line;
+                        Console.WriteLine("Write line: " + outputLine);
+                        outputFile.WriteLine(outputLine);
+                    }
                 }
             }
         }
