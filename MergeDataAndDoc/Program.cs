@@ -9,6 +9,7 @@ namespace MergeDataAndDoc
 {
     class Program
     {
+        public static List<string[]> dataBucket = new List<string[]>();
         static void Main(string[] args)
         {
             bool fileFound = false;
@@ -34,24 +35,29 @@ namespace MergeDataAndDoc
                         continue;
                     }
                 }
-                Console.Write(inputFileName);
-                Console.Write(outputFileName);
-                Console.Write(templateFileName);
             }
             if (File.Exists(inputFileName))
                 fileFound = true;
             else
+            {
+                fileFound = false;
                 Console.WriteLine("Can not found the inputfile : " + inputFileName);
+            }
             if (File.Exists(templateFileName))
                 fileFound = true;
             else
+            {
                 Console.WriteLine("Can not found the templatefile : " + templateFileName);
+                fileFound = false;
+            }
             if (fileFound)
             {
                 using (StreamReader inputFile = new StreamReader(inputFileName))
+                using (StreamReader templateFile = new StreamReader(templateFileName))
                 using (StreamWriter outputFile = new StreamWriter(outputFileName))
                 {
                     readFile(inputFile);
+                    setTemplete(templateFile);
                     string line; //test
                     while ((line = inputFile.ReadLine()) != null)
                     {
@@ -62,12 +68,31 @@ namespace MergeDataAndDoc
                 }
             }
         }
+        public static void setTemplete(StreamReader template) {
+            char[] cut = { '{', '$', '}' };
+            string linebuf = template.ReadToEnd();
+            string[] result = linebuf.Split(cut);
+            Console.WriteLine("result check: \n");
+            foreach (string s in result) {
+                Console.Write(s);
+            }
+        }
         public static void readFile(StreamReader input) {
             string linebuf = input.ReadLine();
             char[] cut = {'\t', '\n'};
             string[] col = linebuf.Split(cut);
-            foreach (string s in col) {
-                Console.WriteLine(s);
+            dataBucket.Add(col);
+            while (!input.EndOfStream) {
+                linebuf = input.ReadLine();
+                string[] element = new string[col.Length];
+                element = linebuf.Split(cut);
+                dataBucket.Add(element);
+            }
+            foreach (string[] s in dataBucket) {
+                foreach (string e in s) {
+                    Console.Write(e + " ");
+                }
+                Console.Write("\n");
             }
         }
     }
