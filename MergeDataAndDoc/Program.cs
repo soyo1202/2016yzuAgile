@@ -41,11 +41,11 @@ namespace MergeDataAndDoc
             if (File.Exists(inputFileName))
                 fileFound = true;
             else
-                Console.WriteLine("Can not found the inputfile" + inputFileName);
+                Console.WriteLine("Can not found the inputfile : " + inputFileName);
             if (File.Exists(templateFileName))
                 fileFound = true;
             else
-                Console.WriteLine("Can not found the templatefile" + templateFileName);
+                Console.WriteLine("Can not found the templatefile : " + templateFileName);
             if (fileFound)
             {
                 using (StreamReader inputFile = new StreamReader(inputFileName))
