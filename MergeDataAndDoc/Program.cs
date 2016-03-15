@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace MergeDataAndDoc
 {
     class Program
@@ -13,8 +14,8 @@ namespace MergeDataAndDoc
         static void Main(string[] args)
         {
             bool fileFound = false;
-            string inputFileName = "defaultInput.txt";
-            string templateFileName = "";
+            string inputFileName = "simpleInput.txt";
+            string templateFileName = "simpleTemplate.txt";
             string outputFileName = "defaultOutput.txt";
             if (args.Length >0)
             {
@@ -57,7 +58,8 @@ namespace MergeDataAndDoc
                 using (StreamWriter outputFile = new StreamWriter(outputFileName))
                 {
                     readFile(inputFile);
-                    setTemplete(templateFile);
+                    setTempleteV2(templateFile);
+                    //setTemplete(templateFile);
                     string line; //test
                     while ((line = inputFile.ReadLine()) != null)
                     {
@@ -66,6 +68,18 @@ namespace MergeDataAndDoc
                         outputFile.WriteLine(outputLine);
                     }
                 }
+            }
+        }
+        public static void setTempleteV2(StreamReader template) {
+            string linebuf = template.ReadToEnd();
+            string result = linebuf;
+            for (int i = 1; i < dataBucket.Count; i++) {
+                result = linebuf;
+                for (int j = 0; j < dataBucket[0].Length; j++)
+                {
+                   result = result.Replace("${"+dataBucket[0][j]+"}", dataBucket[i][j]);
+                }
+                Console.WriteLine(result);
             }
         }
         public static void setTemplete(StreamReader template) {
@@ -102,12 +116,6 @@ namespace MergeDataAndDoc
                 string[] element = new string[col.Length];
                 element = linebuf.Split(cut);
                 dataBucket.Add(element);
-            }
-            foreach (string[] s in dataBucket) {
-                foreach (string e in s) {
-                    Console.Write(e + " ");
-                }
-                Console.Write("\n");
             }
         }
     }
