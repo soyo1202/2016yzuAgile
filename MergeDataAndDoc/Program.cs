@@ -57,17 +57,17 @@ namespace MergeDataAndDoc
                StreamReader templateFile = new StreamReader(templateFileName);
                StreamWriter outputFile = new StreamWriter(outputFileName);
 
-               testingRefector(inputFile, templateFile, outputFile);
+               testMethod(inputFile, templateFile, outputFile);
                 
             }
         }
 
-        private static void testingRefector(StreamReader inputFile, StreamReader templateFile, StreamWriter outputFile)
+        public static void testMethod(TextReader inputFile, TextReader templateFile, TextWriter outputFile)
         {
             readFile(inputFile);
             setTemplete(templateFile, outputFile);
         }
-        public static void setTemplete(StreamReader template, StreamWriter writeFile) {
+        public static void setTemplete(TextReader template, TextWriter writeFile) {
             string linebuf = template.ReadToEnd();
             string result = linebuf;
             for (int i = 1; i < dataBucket.Count; i++) {
@@ -81,13 +81,12 @@ namespace MergeDataAndDoc
             }
             writeFile.Close();
         }
-        public static void readFile(StreamReader input) {
+        public static void readFile(TextReader input) {
             string linebuf = input.ReadLine();
             char[] cut = {'\t', '\n'};
             string[] col = linebuf.Split(cut);
             dataBucket.Add(col);
-            while (!input.EndOfStream) {
-                linebuf = input.ReadLine();
+            while ( (linebuf = input.ReadLine()) != null) {
                 string[] element = new string[col.Length];
                 element = linebuf.Split(cut);
                 dataBucket.Add(element);

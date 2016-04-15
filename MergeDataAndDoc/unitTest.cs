@@ -13,10 +13,12 @@ namespace MergeDataAndDoc
     {
         [Test]
         void refectorSuccess() {
-            StringReader dataReader;
-            StringReader tempReader;
-            StringWriter writer;
-
+            StringReader dataReader  = new StringReader("");
+            StringReader tempReader = new StringReader("");
+            StringWriter writer = new StringWriter();
+            Program.testMethod(dataReader, tempReader, writer);
+            Assert.That(dataReader.ToString(), Is.EqualTo("123"));
+            Console.WriteLine(dataReader.ToString());
         }
     }
 }
