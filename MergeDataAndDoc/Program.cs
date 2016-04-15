@@ -53,22 +53,19 @@ namespace MergeDataAndDoc
             }
             if (fileFound)
             {
-                using (StreamReader inputFile = new StreamReader(inputFileName))
-                using (StreamReader templateFile = new StreamReader(templateFileName))
-                using (StreamWriter outputFile = new StreamWriter(outputFileName))
-                {
-                    readFile(inputFile);
-                    setTemplete(templateFile, outputFile);
-                    //string line; //test
-                    //while ((line = inputFile.ReadLine()) != null)
-                    //{
-                    //    string outputLine = "***" + line;
-                    //    Console.WriteLine("Write line: " + outputLine);
-                    //    outputFile.WriteLine(outputLine);
-                    //}
-                    //outputFile.Close();
-                }
+               StreamReader inputFile = new StreamReader(inputFileName);
+               StreamReader templateFile = new StreamReader(templateFileName);
+               StreamWriter outputFile = new StreamWriter(outputFileName);
+
+               testingRefector(inputFile, templateFile, outputFile);
+                
             }
+        }
+
+        private static void testingRefector(StreamReader inputFile, StreamReader templateFile, StreamWriter outputFile)
+        {
+            readFile(inputFile);
+            setTemplete(templateFile, outputFile);
         }
         public static void setTemplete(StreamReader template, StreamWriter writeFile) {
             string linebuf = template.ReadToEnd();
